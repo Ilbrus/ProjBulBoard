@@ -46,6 +46,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+    
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.yandex',
+
+    'django_filters',
+    'django_summernote',
+
+    # 'posts',
+    # 'posts.apps.PostsConfig',
+    # 'accounts',
+    # 'sign',
 ]
 
 MIDDLEWARE = [
@@ -79,6 +95,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'buboard.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -108,6 +125,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
+    }
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -129,4 +153,44 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static/')
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SITE_ID = 2
+DOMAIN = 'http://127.0.0.1:8000'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+PROJECT_DIR = os.path.dirname(__file__)
+
+# Страница, на которую переправляют пользователя для авторизации,
+# и страница, куда он попадет после успешного входа на сайт
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_FORMS = {'signup': 'sign.forms.BasicSignupForm'}
+
+YANDEX_OAUTH2_CLIENT_KEY = 'c69af7809a374e0c8be4beb98de76a50'
+YANDEX_OAUTH2_CLIENT_SECRET = '03b262ca05b64fa1a2160e59a610c778'
+
+# эти три строчки необходимы для нормальной работы Яндекс авторизации
+YANDEX_APP_ID = YANDEX_OAUTH2_CLIENT_KEY
+YANDEX_API_SECRET = YANDEX_OAUTH2_CLIENT_SECRET
+YANDEX_OAUTH2_API_URL = 'https://api-yaru.yandex.ru/me/'
+
+EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты
+EMAIL_PORT = 465  # порт smtp сервера
+EMAIL_HOST_USER = 'bliznyu4enko'
+EMAIL_HOST_PASSWORD = 'rmkmqggqpzcesodu'  # сгенерированный пароль от почты
+EMAIL_USE_SSL = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'bliznyu4enko@yandex.ru'
