@@ -83,7 +83,7 @@ ROOT_URLCONF = 'buboard.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,7 +98,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'buboard.wsgi.application'
 
-
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend"
+]
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -176,15 +181,17 @@ PROJECT_DIR = os.path.dirname(__file__)
 # и страница, куда он попадет после успешного входа на сайт
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
 ACCOUNT_FORMS = {'signup': 'sign.forms.BasicSignupForm'}
-
-YANDEX_OAUTH2_CLIENT_KEY = 'c69af7809a374e0c8be4beb98de76a50'
-YANDEX_OAUTH2_CLIENT_SECRET = '03b262ca05b64fa1a2160e59a610c778'
+YANDEX_OAUTH2_CLIENT_KEY = '3923b5588d0a49dc8dab66ca095bd697'
+YANDEX_OAUTH2_CLIENT_SECRET = '08ba7fdfe9fb47ea919af9b1569de039'
 
 # эти три строчки необходимы для нормальной работы Яндекс авторизации
 YANDEX_APP_ID = YANDEX_OAUTH2_CLIENT_KEY
@@ -193,8 +200,8 @@ YANDEX_OAUTH2_API_URL = 'https://api-yaru.yandex.ru/me/'
 
 EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты
 EMAIL_PORT = 465  # порт smtp сервера
-EMAIL_HOST_USER = 'bliznyu4enko'
-EMAIL_HOST_PASSWORD = 'rmkmqggqpzcesodu'  # сгенерированный пароль от почты
+EMAIL_HOST_USER = 'masterpiton'
+EMAIL_HOST_PASSWORD = 'zufmlyclwuhphqlr'  # сгенерированный пароль от почты
 EMAIL_USE_SSL = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'bliznyu4enko@yandex.ru'
+DEFAULT_FROM_EMAIL = 'masterpiton@yandex.ru'
