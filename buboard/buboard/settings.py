@@ -59,9 +59,8 @@ INSTALLED_APPS = [
     'django_summernote',
 
     # 'posts',
-    # 'posts.apps.PostsConfig',
-    # 'accounts',
-    # 'sign',
+    'posts.apps.PostsConfig',
+    'accounts',
 ]
 
 
